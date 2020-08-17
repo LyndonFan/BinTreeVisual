@@ -9,18 +9,15 @@ function setup() {
   createCanvas(800, 600);
   rectMode(CENTER);
   
-  b = new Tree(new Tree(null,1,null), 3, new Tree(null,5,null));
-  b.add(6);
-  b.add(0);
-  b.add(2);
-  b.add(4);
+  b = new Tree(null,int(random(-100,100)),null);
+  for (var i = 1; i < 16; i++){b.add(int(random(-100,100)));} 
 }
 
 function control(){
   if (keyIsDown(LEFT_ARROW) || keyIsDown(65)){transX += 10;}
   if (keyIsDown(RIGHT_ARROW) || keyIsDown(68)){transX -= 10;}
-  if (keyIsDown(UP_ARROW) || keyIsDown(87)){transY -= 10;}
-  if (keyIsDown(DOWN_ARROW) || keyIsDown(83)){transY += 10;}
+  if (keyIsDown(UP_ARROW) || keyIsDown(87)){transY += 10;}
+  if (keyIsDown(DOWN_ARROW) || keyIsDown(83)){transY -= 10;}
 }
 
 function transform(x,y){

@@ -1,5 +1,5 @@
 class Tree{
-  constructor(l,v,r){
+  constructor(l,v,r,p=null){
     this.left = l;
     this.val = v;
     this.right = r;
@@ -7,6 +7,7 @@ class Tree{
     this.width = null;
     this.hUpdated = false;
     this.wUpdated = false;
+    this.parent = p;
   }
   askHeight(){
     if (this.hUpdated && (this.height!==null)){return this.height;}
@@ -26,14 +27,29 @@ class Tree{
     this.wUpdated = true;
     return w;
   }
+  
   add(newV){
     if (newV < this.val){
-      if (this.left===null){this.left = new Tree(null,newV,null);}
+      if (this.left===null){this.left = new Tree(null,newV,null,this);}
       else {this.left.add(newV);}
     } else if (newV > this.val){
-      if (this.right===null){this.right = new Tree(null,newV,null);}
+      if (this.right===null){this.right = new Tree(null,newV,null,this);}
       else {this.right.add(newV);}
     }
+  }
+  find(v){
+    if (this.val === v){
+      return this;
+    } else if (this.left !== null && v < this.val){
+      return this.left.find(v);
+    } else if (this.right !== null && v > this.val){
+      return this.left.find(v);
+    } else {
+      return this;
+    }
+  }
+  delete(v){
+    
   }
   
   show(){
@@ -64,11 +80,10 @@ class Tree{
     let pos = transform(x,y);
     circle(pos[0],pos[1],zoom(100));
     fill(0);
-    let mag = abs(this.val)<10 ? 1 : log(abs(this.val),10);
-    if (this.val < 0){mag++;}
-    textSize(zoom(60/mag));
+    let mag = abs(this.val)<10 ? 1 : ceil(log(abs(this.val),10));
+    textSize(zoom(60/pow(mag,0.5)));
     textAlign(CENTER);
-    let textpos = transform(x,y+20/mag);
+    let textpos = transform(x-5/pow(mag,0.5)*int(this.val<0),y+20/pow(mag,0.5));
     text(this.val,textpos[0],textpos[1]);
     if (this.left!==null){
       let dist = (this.left.right===null) ? 1 : 1+this.left.right.askWidth();
