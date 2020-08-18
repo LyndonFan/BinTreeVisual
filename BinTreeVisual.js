@@ -4,13 +4,19 @@ var transY  = 0;
 var startX = 0;
 var startY = 0;
 var zoomScale = 0;
+var eventLog = [];
 
 function setup() { 
-  createCanvas(800, 600);
-  rectMode(CENTER);
+  createCanvas(windowWidth, windowHeight);
   
-  b = new Tree(null,int(random(-100,100)),null);
-  for (var i = 1; i < 16; i++){b.add(int(random(-100,100)));} 
+  b = new Tree(null,int(random(-5,5)),null);
+  lens = new Lens(b);
+  for (var i = 1; i < 16; i++){b.add(int(random(-10,10)));} 
+  textAlign(CENTER,CENTER);
+}
+
+function resetTransform(){
+  transX=0;transY=0;zoomScale=0;
 }
 
 function control(){
@@ -29,6 +35,7 @@ function zoom(d){
 }
 
 function draw() { 
+  createCanvas(windowWidth, windowHeight);
   background(220);
   control();
   //let tup = transform(0,0);
@@ -39,6 +46,11 @@ function draw() {
   //fill(0);
   //text(transform(0,0),width/2,height/2);
   b.show();
+  lens.show();
+  fill(0,0,0);
+  strokeWeight(1);
+  stroke(0);
+  text(transX+","+transY+","+zoomScale,100,100);
 }
 
 function mousePressed() {
@@ -57,5 +69,6 @@ function mouseDragged() {
 function keyPressed(){
   if (keyCode === 81){zoomScale--;}
   if (keyCode === 69){zoomScale++;}
-  if (keyCode === 82){transX=0;transY=0;zoomScale=0;}
+  if (keyCode === 82){resetTransform();}
+  if (keyCode === 70){lens.toggle();}
 }

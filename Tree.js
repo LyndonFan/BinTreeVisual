@@ -8,6 +8,8 @@ class Tree{
     this.hUpdated = false;
     this.wUpdated = false;
     this.parent = p;
+    this.x = width/2;
+    this.y = 100;
   }
   askHeight(){
     if (this.hUpdated && (this.height!==null)){return this.height;}
@@ -57,6 +59,8 @@ class Tree{
     this.drawCircles(width/2,100);
   }
   drawLines(x,y){
+    this.x = x;
+    this.y = y;
     fill(0);
     strokeWeight(zoom(10));
     if (this.left!==null){
@@ -78,12 +82,14 @@ class Tree{
   drawCircles(x,y){
     fill(255);
     let pos = transform(x,y);
+    strokeWeight(zoom(10));
     circle(pos[0],pos[1],zoom(100));
     fill(0);
     let mag = abs(this.val)<10 ? 1 : ceil(log(abs(this.val),10));
-    textSize(zoom(60/pow(mag,0.5)));
+    strokeWeight(1);
+    textSize(zoom(60/pow(mag,0.25)));
     textAlign(CENTER);
-    let textpos = transform(x-5/pow(mag,0.5)*int(this.val<0),y+20/pow(mag,0.5));
+    let textpos = transform(x,y);
     text(this.val,textpos[0],textpos[1]);
     if (this.left!==null){
       let dist = (this.left.right===null) ? 1 : 1+this.left.right.askWidth();
