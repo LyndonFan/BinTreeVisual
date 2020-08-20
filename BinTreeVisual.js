@@ -7,6 +7,7 @@ var zoomScale = 0;
 var eventLog = [];
 var buttons = [];
 var addButton, findButton, deleteButton, input;
+var events = [];
 
 function setup() { 
   createCanvas(windowWidth, windowHeight);
@@ -42,13 +43,13 @@ function tryAdd(){
 }
 
 function tryFind(){
-  console.log(int('a'));
-  input.value('');
+  let v = processInput();
+  if (!isNaN(v)){lens.tree = b.find(v);}
 }
 
 function tryDelete(){
-  console.log(type(input.value()));
-  input.value('');
+  let v = processInput();
+  if (!isNaN(v)){b.delete(v);}
 }
 
 function resetTransform(){
@@ -73,18 +74,19 @@ function draw() {
   b.show();
   lens.show();
   fill(0,0,0);
-  if (b.left !== null){
-    let arrowL = new Arrow(b.x,b.y,b.left.x,b.left.y);
+  let t = lens.tree;
+  if (t.left !== null){
+    let arrowL = new Arrow(t.x,t.y,t.left.x,t.left.y);
     arrowL.show();
     //console.log("L:"+b.left.x+","+b.left.y);
   }
-  if (b.right !== null){
-    let arrowR = new Arrow(b.x,b.y,b.right.x,b.right.y);
+  if (t.right !== null){
+    let arrowR = new Arrow(t.x,t.y,t.right.x,t.right.y);
     arrowR.show();
     //console.log("R:"+b.right.x+","+b.right.y);
   }
-  if (b.parent !== null){
-    let arrowP = new Arrow(b.x,b.y,b.parent.x,b.parent.y);
+  if (t.parent !== null){
+    let arrowP = new Arrow(t.x,t.y,t.parent.x,t.parent.y);
     arrowP.show();
     //console.log("P:"+b.parent.x+","+b.parent.y);
   }

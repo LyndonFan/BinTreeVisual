@@ -53,6 +53,33 @@ class Tree{
     }
   }
   delete(v){
+    let t = this.find(v);
+    console.log(t);
+    if (t.left !== null){
+      t.hUpdated = false;
+      t.wUpdated = false;
+      if (t.left.right !== null){
+        let curr = t.left;
+        while (curr.right.right !== null){curr = curr.right;}
+        t.val = curr.right.val;
+        curr.right = null;
+      } else {
+        t.val = t.left.val;
+        t.left = t.left.left;
+      }
+    } else if (t.right !== null){
+      t.hUpdated = false;
+      t.wUpdated = false;
+      if (t.right.left !== null){
+        let curr = t.right;
+        while (curr.left.left !== null){curr = curr.left;}
+        t.val = curr.left.val;
+        curr.left = null;
+      } else {
+        t.val = this.right.val;
+        t.right = this.right.right;
+      }
+    }
     
   }
   

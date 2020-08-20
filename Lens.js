@@ -2,6 +2,7 @@ class Lens{
   constructor(t){
     this.tree = t;
     this.isFocus = false;
+    this.isMoving = false;
   }
   toggle(){
     this.isFocus = !this.isFocus;
@@ -18,7 +19,7 @@ class Lens{
   show(){
     if (this.isFocus){this.focus();}
     fill('rgba(0,0,0,0)');
-    stroke(0,255,255);
+    this.isMoving ? stroke(0,255,255) : stroke(0,100,100);
     strokeWeight(zoom(10));
     let pos = transform(this.tree.x,this.tree.y);
     circle(pos[0],pos[1],zoom(100+15));
