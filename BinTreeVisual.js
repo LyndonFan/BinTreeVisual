@@ -5,6 +5,8 @@ var startX = 0;
 var startY = 0;
 var zoomScale = 0;
 var eventLog = [];
+var buttons = [];
+var addButton, findButton, deleteButton, input;
 
 function setup() { 
   createCanvas(windowWidth, windowHeight);
@@ -13,17 +15,44 @@ function setup() {
   lens = new Lens(b);
   for (var i = 1; i < 16; i++){b.add(int(random(-10,10)));} 
   textAlign(CENTER,CENTER);
+  buttons = [createButton('Add'), createButton('Find'), createButton('Delete')];
+  input = createInput(0,'number');
+  buttons[0].mousePressed(tryAdd);
+  buttons[1].mousePressed(tryFind);
+  buttons[2].mousePressed(tryDelete);
+  for (i = 0; i < 3; i++){
+    buttons[i].position(width+i*100-300,height-100);
+    buttons[i].size(100,50);
+    buttons[i].style('font-size:20px');
+  }
+  input.position(width-300,height-50);
+  input.size(300,50);
+  input.style('font-size:20px');
+}
+
+function processInput(){
+  let v = input.value();
+  input.value('');
+  return int(v);
+}
+
+function tryAdd(){
+  let v = processInput();
+  if (!isNaN(v)){b.add(v);}
+}
+
+function tryFind(){
+  console.log(int('a'));
+  input.value('');
+}
+
+function tryDelete(){
+  console.log(type(input.value()));
+  input.value('');
 }
 
 function resetTransform(){
   transX=0;transY=0;zoomScale=0;
-}
-
-function control(){
-  if (keyIsDown(LEFT_ARROW) || keyIsDown(65)){transX += 10;}
-  if (keyIsDown(RIGHT_ARROW) || keyIsDown(68)){transX -= 10;}
-  if (keyIsDown(UP_ARROW) || keyIsDown(87)){transY += 10;}
-  if (keyIsDown(DOWN_ARROW) || keyIsDown(83)){transY -= 10;}
 }
 
 function transform(x,y){
@@ -37,20 +66,32 @@ function zoom(d){
 function draw() { 
   createCanvas(windowWidth, windowHeight);
   background(220);
-  control();
-  //let tup = transform(0,0);
-  //image(img, tup[0], tup[1], zoom(800), zoom(400));
-  //tup = transform(width/2,height/2);
-  //fill(255);
-  //circle(tup[0],tup[1],zoom(100));
-  //fill(0);
-  //text(transform(0,0),width/2,height/2);
+  if (keyIsDown(LEFT_ARROW) || keyIsDown(65)){transX += 10;}
+  if (keyIsDown(RIGHT_ARROW) || keyIsDown(68)){transX -= 10;}
+  if (keyIsDown(UP_ARROW) || keyIsDown(87)){transY += 10;}
+  if (keyIsDown(DOWN_ARROW) || keyIsDown(83)){transY -= 10;}
   b.show();
   lens.show();
   fill(0,0,0);
-  strokeWeight(1);
-  stroke(0);
-  text(transX+","+transY+","+zoomScale,100,100);
+  if (b.left !== null){
+    let arrowL = new Arrow(b.x,b.y,b.left.x,b.left.y);
+    arrowL.show();
+    //console.log("L:"+b.left.x+","+b.left.y);
+  }
+  if (b.right !== null){
+    let arrowR = new Arrow(b.x,b.y,b.right.x,b.right.y);
+    arrowR.show();
+    //console.log("R:"+b.right.x+","+b.right.y);
+  }
+  if (b.parent !== null){
+    let arrowP = new Arrow(b.x,b.y,b.parent.x,b.parent.y);
+    arrowP.show();
+    //console.log("P:"+b.parent.x+","+b.parent.y);
+  }
+  for (i = 0; i < 3; i++){
+    buttons[i].position(width+i*100-300,height-100);
+  }
+  input.position(width-300,height-50);
 }
 
 function mousePressed() {

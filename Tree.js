@@ -31,6 +31,8 @@ class Tree{
   }
   
   add(newV){
+    this.hUpdated = false;
+    this.wUpdated = false;
     if (newV < this.val){
       if (this.left===null){this.left = new Tree(null,newV,null,this);}
       else {this.left.add(newV);}
@@ -45,7 +47,7 @@ class Tree{
     } else if (this.left !== null && v < this.val){
       return this.left.find(v);
     } else if (this.right !== null && v > this.val){
-      return this.left.find(v);
+      return this.right.find(v);
     } else {
       return this;
     }
@@ -68,7 +70,8 @@ class Tree{
       dist*=100;
       let start = transform(x,y);
       let end = transform(x-dist, y+100);
-      line(start[0],start[1],end[0],end[1]);this.left.drawLines(x-dist,y+100);
+      line(start[0],start[1],end[0],end[1]);
+      this.left.drawLines(x-dist,y+100);
     }
     if (this.right!==null){
       let dist = (this.right.left===null) ? 1 : 1+this.right.left.askWidth();
@@ -87,7 +90,7 @@ class Tree{
     fill(0);
     let mag = abs(this.val)<10 ? 1 : ceil(log(abs(this.val),10));
     strokeWeight(1);
-    textSize(zoom(60/pow(mag,0.25)));
+    textSize(zoom(80/pow(mag,0.5)));
     textAlign(CENTER);
     let textpos = transform(x,y);
     text(this.val,textpos[0],textpos[1]);

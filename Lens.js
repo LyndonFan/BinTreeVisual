@@ -6,7 +6,7 @@ class Lens{
   toggle(){
     this.isFocus = !this.isFocus;
     if (this.isFocus){this.focus();}
-    else {resetTransform();}
+    else {zoomScale=0;}
   }
   focus(){
     let k = min(width,height)/600;
