@@ -74,25 +74,7 @@ function draw() {
   b.show();
   lens.show();
   fill(0,0,0);
-  let t = lens.tree;
-  if (t.left !== null){
-    let arrowL = new Arrow(t.x,t.y,t.left.x,t.left.y);
-    arrowL.show();
-    //console.log("L:"+b.left.x+","+b.left.y);
-  }
-  if (t.right !== null){
-    let arrowR = new Arrow(t.x,t.y,t.right.x,t.right.y);
-    arrowR.show();
-    //console.log("R:"+b.right.x+","+b.right.y);
-  }
-  if (t.parent !== null){
-    let arrowP = new Arrow(t.x,t.y,t.parent.x,t.parent.y);
-    arrowP.show();
-    //console.log("P:"+b.parent.x+","+b.parent.y);
-  }
-  for (i = 0; i < 3; i++){
-    buttons[i].position(width+i*100-300,height-100);
-  }
+  var t = lens.tree;
   input.position(width-300,height-50);
 }
 

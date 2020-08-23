@@ -34,9 +34,11 @@ class Tree{
     this.hUpdated = false;
     this.wUpdated = false;
     if (newV < this.val){
+      //events.push((this,'a','l'));
       if (this.left===null){this.left = new Tree(null,newV,null,this);}
       else {this.left.add(newV);}
     } else if (newV > this.val){
+      //events.push((this,'a','r'));
       if (this.right===null){this.right = new Tree(null,newV,null,this);}
       else {this.right.add(newV);}
     }
@@ -71,13 +73,13 @@ class Tree{
       t.hUpdated = false;
       t.wUpdated = false;
       if (t.right.left !== null){
-        let curr = t.right;
-        while (curr.left.left !== null){curr = curr.left;}
-        t.val = curr.left.val;
-        curr.left = null;
+        let curr2 = t.right;
+        while (curr2.left.left !== null){curr2 = curr2.left;}
+        t.val = curr2.left.val;
+        curr2.left = null;
       } else {
-        t.val = this.right.val;
-        t.right = this.right.right;
+        t.val = t.right.val;
+        t.right = t.right.right;
       }
     }
     
